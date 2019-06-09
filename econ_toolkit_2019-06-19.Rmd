@@ -1,0 +1,58 @@
+---
+title: "The Applied Economist's Data Science Toolkit"
+subtitle: ""  
+author: "Wei Yang Tham"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+```{r xaringan-themer, include=FALSE}
+library(xaringanthemer)
+solarized_dark(
+  code_font_family = "Fira Code",
+  code_font_url    = "https://cdn.rawgit.com/tonsky/FiraCode/1.204/distr/fira_code.css"
+)
+```
+
+---
+class: center, middle
+
+# About Me
+
+PhD candidate in Economics at The Ohio State University
+
+Economics of Science and Innovation
+
+Applied microeconomist
+
+---
+
+# Goals
+
+Provide intuition for methods that economists have been using
+
+Inspiration for ways you might apply this in the context you work in
+
+---
+
+# asdf
+
+asdf
+
+
+
+
+
+
+
