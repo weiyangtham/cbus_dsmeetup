@@ -15,6 +15,8 @@ output:
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning = FALSE, message = FALSE)
+
 ```
 
 ```{r xaringan-themer, include=FALSE}
@@ -32,23 +34,72 @@ class: center, middle
 
 PhD candidate in Economics at The Ohio State University
 
-Economics of Science and Innovation
-
-Applied microeconomist
+**Use tools from applied econometrics** to study science and innovation
 
 ---
 
 # Goals
 
-Provide intuition for methods that economists have been using
+Provide intuition for "methods" that economists have been using
 
 Inspiration for ways you might apply this in the context you work in
 
 ---
 
-# asdf
+# Caveats
 
-asdf
+Lots of advances in methodology have come from other fields including political science, epidemiology, statistics, computer science
+
+Only one part of econometrics and economics
+
+---
+
+class: centre, middle
+
+# Data scientists wear many hats
+
+```{r, out.width="45%", fig.align='default'}
+knitr::include_graphics(c("img/beta_hat.png", "img/y_hat.jpg"))
+
+```
+
+---
+
+## Prediction vs causation
+
+
+## $$y = X_1\beta_1 + \epsilon$$
+---
+
+$\hat{y}$ - If a student with a certain set of characteristics $X_i$ (e.g. test scores, demographics) arrives, what is my best guess of their future wages?
+
+$\hat{\beta}$ - If I implement an educational intervention, what is my best guess of how much their wages will increase $\triangle \hat{y}$
+
+
+---
+
+# Design vs methods
+
+
+
+---
+
+## What can't quasi-experiments do
+
+- Experiment you want vs experiment you get
+- Local average treatment effects
+- External validity
+
+---
+
+## Econometrics and Machine Learning
+
+---
+
+# Resources 
+
+- Mostly Harmless Econometrics or Mastering 'Metrics
+- [What's the Science in Data Science? - Skipper Seabold](https://youtu.be/kTo16ieMCi8)
 
 
 
