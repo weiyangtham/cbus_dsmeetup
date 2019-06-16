@@ -73,14 +73,106 @@ knitr::include_graphics(c("img/beta_hat.png", "img/y_hat.jpg"))
 
 $\hat{y}$ - If a student with a certain set of characteristics $X_i$ (e.g. test scores, demographics) arrives, what is my best guess of their future wages?
 
-$\hat{\beta}$ - If I implement an educational intervention, what is my best guess of how much their wages will increase $\triangle \hat{y}$
+$\hat{\beta}$ - If I implement an educational intervention, what is my best guess of how much their wages will increase?
+
+--
+
+Estimating $\hat{\beta}$ is the bread and butter of many applied economists 
+
+---
+
+Why can't we just run a regression of $y$ on $X$?
+
+---
+
+## People don't make choices randomly
+
+E.g. people don't randomly choose whether to go to college 
+
+---
+
+## Threats to validity
+
+Omitted variable bias - people make choices to 
+
+Reverse causation - Umbrellas cause rain
+
+
+---
+
+## Randomized experiments are often treated as the gold standard
+
+---
+
+## But RCTs are not always feasible
+
+- Feasibility or expense
+- Ethics
+
+---
+
+Which is where quasi-experiments come in
+
+---
+
+## Quasi-experimental designs
+
+- Instrumental variables
+- Difference-in-differences
+  + Synthetic control
+- Matching
+- Regression discontinuity
 
 
 ---
 
 # Design vs methods
 
+- Focus is on *credible* design
+- Advantages: assumptions are transparent, focuses the discussion
 
+---
+class: middle, inverse
+
+The applied economist's toolkit
+
+---
+
+## Instrumental variables
+
+- Can address confounding and reverse causality
+
+---
+
+- insert picture 
+  
+---
+
+## What makes a good instrument?
+
+- Relevant 
+- Has an effect on the intervention
+
+- Exclusion restriction
+- Only related to the outcome through its effect on intervention
+
+---
+
+## Where to find instruments
+
+- Gender of children as instrument for family size
+- Quarter-of-birth for years spent in school
+- Muslim holidays as instrument for number of drivers on the road
+
+---
+
+## Instruments don't have to be clever!
+
+Randomization is a great instrument - e.g. Oregon medicaid lottery
+
+---
+
+### If you run A/B tests you have instruments too!
 
 ---
 
