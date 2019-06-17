@@ -144,8 +144,10 @@ The applied economist's toolkit
 
 ---
 
-- insert picture 
-  
+```{r}
+knitr::include_graphics("img/iv_dag.png")
+```
+
 ---
 
 ## What makes a good instrument?
@@ -163,12 +165,12 @@ The applied economist's toolkit
 - Gender of children as instrument for family size
 - Quarter-of-birth for years spent in school
 - Muslim holidays as instrument for number of drivers on the road
+- **Randomization** is a great instrument - e.g. Oregon medicaid lottery
 
 ---
 
-## Instruments don't have to be clever!
-
-Randomization is a great instrument - e.g. Oregon medicaid lottery
+## A/B tests can be instruments too!
+  
 
 ---
 
