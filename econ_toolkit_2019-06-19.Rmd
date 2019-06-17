@@ -27,6 +27,14 @@ solarized_dark(
 )
 ```
 
+```{r}
+rm(list = ls())
+library(tidyverse)
+library(magrittr)
+theme_set(theme_minimal(base_size = 13))
+```
+
+
 ---
 class: center, middle
 
@@ -175,6 +183,109 @@ knitr::include_graphics("img/iv_dag.png")
 ---
 
 ### If you run A/B tests you have instruments too!
+
+Example
+
+---
+
+## Difference-in-differences accounts for underlying time trends
+
+- When you observe a group over multiple periods of time
+- Commonly used to compare policy changes across cities or states
+
+---
+
+```{r dd_plots}
+
+set.seed(1)
+n <- 10 ^ 3
+
+simulatedError <- rnorm(n = n)
+group <- sample(c(T, F), n, replace = TRUE)
+
+df <- tibble(time = 10 * round(runif(n), 1) - 5,
+                 treatment = group,
+                 error = simulatedError)
+
+df %<>%
+    mutate(Y = 1 + time + 5 * treatment + 7 * (time >= 0) * treatment + error)
+
+# fit <- lm(Y ~ time + treatment + I((time >= 0) * treatment), data = df)
+# summary(fit)
+
+dfmean <- df %>%
+    group_by(time, treatment) %>%
+    summarise(Y = mean(Y))
+
+df %<>% 
+  mutate(g = case_when(
+    treatment & time < 0 ~ 1, 
+    treatment & time >= 0 ~ 2, 
+    !treatment & time < 0 ~ 3, 
+    !treatment & time >= 0 ~ 4
+  ))
+
+ggplot(data = df, 
+       aes(x = time, y = Y, 
+           colour = treatment, 
+           group = g
+           )
+       ) + 
+  geom_point() + 
+  geom_smooth(method = lm, se = FALSE) + 
+  theme(legend.position = "none") + 
+  scale_color_manual(values = c("#F05253", "#2A73CC", "#F05253", "#2A73CC"))
+```
+
+---
+
+## Difference-in-differences relies on the parallel trend assumption
+
+```{r}
+
+dd_counterfac = df %>% 
+  filter(treatment, time >= 0) %>% 
+  mutate(Y = Y - 7)
+
+ggplot(data = df, 
+       aes(x = time, y = Y, 
+           colour = treatment, 
+           group = g
+           )
+       ) + 
+  geom_smooth(data = dd_counterfac, 
+              aes(x = time, y = Y), 
+              colour = "grey", se = FALSE, method = "lm") + 
+  geom_smooth(method = lm, se = FALSE) + 
+  theme(legend.position = "none") + 
+  scale_color_manual(values = c("#F05253", "#2A73CC", "#F05253", "#2A73CC"))
+
+```
+
+
+---
+
+Classic example: Card and Krueger (1993)
+
+- Compared employment in New Jersey and Pennsylvania before and after minimum wage was raised in New Jersey
+
+---
+
+## Effectiveness of Search Engine Marketing (SEM)
+
+---
+
+## Synthetic Control is a close cousin of difference-in-differences
+
+Used in comparative case studies - how did an event affect aggregate outcomes of a single unit (e.g. country, state)
+
+---
+
+## Synthetic control 
+
+---
+
+## Regression discontinuity
 
 ---
 
