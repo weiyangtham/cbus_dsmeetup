@@ -277,11 +277,15 @@ Classic example: Card and Krueger (1993)
 
 ## Synthetic Control is a close cousin of difference-in-differences
 
-Used in comparative case studies - how did an event affect aggregate outcomes of a single unit (e.g. country, state)
+Used in comparative case studies - how did an event affect aggregate outcomes of a single unit (e.g. country, state)?
+
+Example: What was the economic impact of reunification on West Germany?
 
 ---
 
-## Synthetic control 
+## Synthetic control finds the weighted combination of countries that are most similar to Germany
+
+- Minimize the distance between West Germany and potential control countries based on a set of pre-unification variables 
 
 ---
 
