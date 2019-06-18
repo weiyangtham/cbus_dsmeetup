@@ -11,11 +11,19 @@ output:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
+      ratio: "16:9"
 ---
+
+<style>
+
+.center2 {
+  vertical-align
+}
+</style>
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
-knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning = FALSE, message = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning = FALSE, message = FALSE, eval = TRUE)
 
 ```
 
@@ -25,6 +33,9 @@ solarized_dark(
   code_font_family = "Fira Code",
   code_font_url    = "https://cdn.rawgit.com/tonsky/FiraCode/1.204/distr/fira_code.css"
 )
+
+write_extra_css(list(".vcenter" = list("vertical-align" = "middle")))
+
 ```
 
 ```{r}
@@ -287,9 +298,83 @@ Example: What was the economic impact of reunification on West Germany?
 
 - Minimize the distance between West Germany and potential control countries based on a set of pre-unification variables 
 
+--- 
+
+## West Germany looks different from the rest of the OECD
+
+---
+
+## West Germany and Synthetic West Germany look similar pre-reunification
+
+---
+
+## Synthetic Control: How can you measure the impact of TV advertising?
+
+- Can't randomly assign TV ads to individual users
+- Instead, randomly assign treatment to cities 
+
+---
+
+## Two issues with randomizing by geographic area
+
+1. There are a limited number of cities and they are very different from each other
+2. If you divide up the US into treatment and control, then you can't estimate the effect for *entire* US
+
+---
+
+## Create synthetic US for both treated *and* control cities
+
+.center2[
+```{r}
+knitr::include_graphics("img/wayfair_syntheticcontrol.png")
+```
+]
+
 ---
 
 ## Regression discontinuity
+
+- Compare units just above or below an arbitrary/random cutoff 
+- E.g. test scores to get a scholarship
+
+---
+
+```{r}
+
+mu <- matrix(c(0, 0))
+rho <- 0.5
+sigma1 <- 0.5
+sigma2 <- 2
+Sigma <- matrix(c(sigma1 ^ 2, 
+                  rho * sigma1 * sigma2, 
+                  rho * sigma1 * sigma2, 
+                  sigma2 ^ 2),
+                c(2, 2))
+
+simulatedXandC <- MASS::mvrnorm(n = n, mu = mu, Sigma = Sigma)
+
+
+df <- tibble(X = simulatedXandC[, 1],
+                 C = simulatedXandC[, 2],
+                 tee = (simulatedXandC[, 1] > 0),
+                 error = simulatedError)
+
+df %<>%
+    mutate(Y = 10 + X ^ 3 + 5 * tee + 1 * C + error)
+
+ggplot(data = df, aes(x = X, y = Y, color = (X > 0))) + 
+  geom_point(alpha = 0.8) +
+  geom_smooth(method = lm,   
+                se = FALSE) + 
+  annotate(geom = "rect", 
+           xmin = -0.1, xmax = 0.1, ymax = 15, ymin = 10, 
+           fill = NA, colour = "black")
+
+```
+
+---
+
+
 
 ---
 
@@ -309,7 +394,8 @@ Example: What was the economic impact of reunification on West Germany?
 
 - Mostly Harmless Econometrics or Mastering 'Metrics
 - [What's the Science in Data Science? - Skipper Seabold](https://youtu.be/kTo16ieMCi8)
-
+- [Teconomics](https://medium.com/teconomics-blog/)
+- [Wayfair Tech Blog](https://tech.wayfair.com/data-science/2017/08/using-geographic-splitting-optimization-techniques-to-measure-marketing-performance/)
 
 
 
