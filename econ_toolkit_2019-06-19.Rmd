@@ -399,12 +399,14 @@ ggplot(data = df,
   labs(title = "Subtract the red from the blue") 
 ```
 
-
-
-
 ---
 
 ## Difference-in-differences relies on the parallel trend assumption
+
+Without the intervention, the treatment and control groups would have experienced the same time trends
+
+---
+## arallel trend assumption
 
 ```{r}
 
@@ -420,23 +422,53 @@ ggplot(data = df,
        ) + 
   geom_smooth(data = dd_counterfac, 
               aes(x = time, y = Y), 
-              colour = "grey", se = FALSE, method = "lm") + 
+              colour = "#2A73CC", se = FALSE, method = "lm") + 
   geom_smooth(method = lm, se = FALSE) + 
+  annotate("text", label = "With intervention", x = 2.5, y = 16, size = 5) + 
+  annotate("text", label = "Without intervention", x = 2.5, y = 11, size = 5) + 
   theme(legend.position = "none") + 
   scale_color_manual(values = c("#F05253", "#2A73CC", "#F05253", "#2A73CC"))
 
 ```
 
+---
+
+## Example: Ineffectiveness of Paid search 
+
+```{r}
+knitr::include_graphics("img/ebayad.png")
+```
 
 ---
 
-Classic example: Card and Krueger (1993)
+## Randomization + Difference-in-differences
 
-- Compared employment in New Jersey and Pennsylvania before and after minimum wage was raised in New Jersey
+- Randomly selected cities to turn off paid search
+
+- Selected control cities with similar trends in sales
+
+- Estimated little to no effect of paid search on sales
 
 ---
 
-## Effectiveness of Search Engine Marketing (SEM)
+```{r}
+knitr::include_graphics("img/ebay_dd.png")
+```
+
+---
+
+## Validity checks
+
+- Statistical and graphical checks that trends are similar before the intervention
+
+- Contextual knowledge: knowing what else is changing at the same time
+
+
+---
+
+class: inverse, middle
+
+## Synthetic Control
 
 ---
 
@@ -450,15 +482,22 @@ Example: What was the economic impact of reunification on West Germany?
 
 ## Synthetic control finds the weighted combination of countries that are most similar to Germany
 
-- Minimize the distance between West Germany and potential control countries based on a set of pre-unification variables 
+- Minimize the distance between West Germany and potential control countries based on a set of pre-unification variables (e.g. GDP per capita, trade openness, inflation rate)
 
 --- 
 
 ## West Germany looks different from the rest of the OECD
 
+```{r}
+knitr::include_graphics("img/beforesynth.png")
+```
+
 ---
 
 ## West Germany and Synthetic West Germany look similar pre-reunification
+```{r}
+knitr::include_graphics("img/aftersynth.png")
+```
 
 ---
 
@@ -522,7 +561,7 @@ ggplot(data = df, aes(x = X, y = Y, color = (X > 0))) +
                 se = FALSE) + 
   annotate(geom = "rect", 
            xmin = -0.1, xmax = 0.1, ymax = 15, ymin = 10, 
-           fill = NA, colour = "black")
+           alpha = 0.5)
 
 ```
 
