@@ -166,7 +166,7 @@ knitr::include_graphics("img/ovb.png")
 
 ## Usual Solution? Randomized Control Trials (RCTs)
 
-- If we randomly assign the treatment, then unobserved factors are on average the same across the treatment and control group
+- If we randomly assign the treatment, then the treatment and control groups have similar unobservables (on average)
 
 ---
 
@@ -187,31 +187,36 @@ class: inverse, middle
 ## Quasi-experimental designs
 
 - Instrumental variables
-- Difference-in-differences
-  + Synthetic control
-- Matching
+- Difference-in-differences 
+- Synthetic control 
 - Regression discontinuity
 
 
 ---
 
-# Design vs methods
+## Focus is on Research Design, less on methods
 
-- Focus is on *credible* design
-- Advantages: assumptions are transparent, focuses the discussion
+- Focuses discussion on credibility of research design
+
+- Estimation is often done with linear regression
 
 ---
+
 class: middle, inverse
-
-The applied economist's toolkit
-
----
 
 ## Instrumental variables
 
-- Can address confounding and reverse causality
+---
+
+## Intuition
+
+Problem: College attendance and wages are both related to unobserved characteristics
+
+An *instrument* is something that affects college attendance but NOT wages
 
 ---
+
+## The exclusion restriction is untestable
 
 ```{r}
 knitr::include_graphics("img/iv_dag.png")
@@ -221,31 +226,39 @@ knitr::include_graphics("img/iv_dag.png")
 
 ## What makes a good instrument?
 
-- Relevant 
-- Has an effect on the intervention
+1. Relevant: Has an effect on the intervention ($Z$ affects $D$)
 
-- Exclusion restriction
-- Only related to the outcome through its effect on intervention
+2. Exclusion restriction: Only related to the outcome through its effect on intervention ($Z$ cannot directly affect $Y$)
 
 ---
 
-## Where to find instruments
+## Finding clever instruments is an entire industry...
 
 - Gender of children as instrument for family size
 - Quarter-of-birth for years spent in school
-- Muslim holidays as instrument for number of drivers on the road
-- **Randomization** is a great instrument - e.g. Oregon medicaid lottery
+- Muslim holidays as for number of drivers on the road
 
 ---
 
-## A/B tests can be instruments too!
-  
+## ...but *randomization* is a great instrument!  
+
+- Oregon Medicaid Lottery
+
+- If you have A/B tests, you have instruments!
 
 ---
 
-### If you run A/B tests you have instruments too!
+## Do referrals increase retention?
 
-Example
+- Problem: people who already refer more friends are probably more invested in the product
+
+- Solution: find an A/B test that successfully increased referrals (e.g. an email campaign) and you have a ready-made instrument
+
+---
+
+class: inverse, middle
+
+## Difference-in-differences
 
 ---
 
