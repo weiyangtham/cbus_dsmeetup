@@ -110,7 +110,7 @@ Inspiration for ways you might apply this in other contexts
 
 ---
 
-# Caveats
+## Caveats
 
 Lots of advances in methodology have come from other fields including political science, epidemiology, statistics, computer science
 
@@ -135,13 +135,20 @@ knitr::include_graphics("img/chocolate_nobel.png")
 ## .large[$$y = D\beta+ X\gamma + u$$]
 
 - $y$ is an outcome we care about (e.g. wages)
-- $D$ is an indicator for a "treatment" (e.g. going to college)
+
+- $D$ is an indicator for a treatment/intervention (e.g. going to college)
+
 - $X$ are some characteristics we observe ("observables")
+
 - $u$ is stuff we don't observe ("unobservables")
 
 --
 
-### Why can't we just run a regression and call it a day?
+#### The goal is estimate $\beta$, the effect of $D$ on $y$
+
+--
+
+###  Why can't we just run a regression and call it a day?
 
 ---
 
@@ -167,6 +174,8 @@ knitr::include_graphics("img/ovb.png")
 ---
 
 ## Usual Solution? Randomized Control Trials (RCTs)
+
+- Naive regression ends up comparing people with different unobservables 
 
 - If we randomly assign the treatment, then the treatment and control groups have similar unobservables (on average)
 
