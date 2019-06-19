@@ -216,19 +216,19 @@ An *instrument* is something that affects college attendance but NOT wages
 
 ---
 
+## What makes a good instrument?
+
+1. Relevant: Has an effect on the intervention ( $Z$ affects $D$)
+
+2. Exclusion restriction: Only related to the outcome through its effect on intervention ( $Z$ only affects $Y$ through $D$) 
+
+---
+
 ## The exclusion restriction is untestable
 
 ```{r}
 knitr::include_graphics("img/iv_dag.png")
 ```
-
----
-
-## What makes a good instrument?
-
-1. Relevant: Has an effect on the intervention ($Z$ affects $D$)
-
-2. Exclusion restriction: Only related to the outcome through its effect on intervention ($Z$ cannot directly affect $Y$)
 
 ---
 
@@ -262,12 +262,22 @@ class: inverse, middle
 
 ---
 
-## Difference-in-differences accounts for underlying time trends
+## Example
 
-- When you observe a group over multiple periods of time
-- Commonly used to compare policy changes across cities or states
+- Say you want to know how an increase in the Ohio state minimum wage changed employment
+- If employment decreased after the minimum wage increased, does that mean the causal effect of the minimum wage was to decrease employment?
 
 ---
+
+## Intuition
+
+- Use a control group to account for underlying time trends 
+
+- E.g. find a state that had similar trends in employment to Ohio before the minimum wage increase happened
+
+---
+
+## Similar trends, different levels
 
 ```{r dd_plots}
 
@@ -282,7 +292,7 @@ df <- tibble(time = 10 * round(runif(n), 1) - 5,
                  error = simulatedError)
 
 df %<>%
-    mutate(Y = 1 + time + 5 * treatment + 7 * (time >= 0) * treatment + error)
+    mutate(Y = 1 + 4 * (time >= 0) + 5 * treatment + 7 * (time >= 0) * treatment + error)
 
 # fit <- lm(Y ~ time + treatment + I((time >= 0) * treatment), data = df)
 # summary(fit)
@@ -293,10 +303,10 @@ dfmean <- df %>%
 
 df %<>% 
   mutate(g = case_when(
-    treatment & time < 0 ~ 1, 
-    treatment & time >= 0 ~ 2, 
-    !treatment & time < 0 ~ 3, 
-    !treatment & time >= 0 ~ 4
+    treatment & time < 0 ~ "a", 
+    treatment & time >= 0 ~ "b", 
+    !treatment & time < 0 ~ "c", 
+    !treatment & time >= 0 ~ "d"
   ))
 
 ggplot(data = df, 
@@ -305,11 +315,92 @@ ggplot(data = df,
            group = g
            )
        ) + 
+  aes(alpha = g) + 
   geom_point() + 
-  geom_smooth(method = lm, se = FALSE) + 
-  theme(legend.position = "none") + 
-  scale_color_manual(values = c("#F05253", "#2A73CC", "#F05253", "#2A73CC"))
+  geom_line(stat = "smooth", method = lm, se = FALSE) + 
+  geom_vline(xintercept = -0.5, linetype = 2) + 
+  scale_color_manual(values = c("#F05253", "#2A73CC", "#F05253", "#2A73CC")) + 
+  scale_alpha_manual(values = c(1, 0, 1, 0), guide = F) + 
+  theme(legend.position = c(0.2, 0.8)) 
 ```
+
+---
+
+## Control and Treated groups both increased
+
+```{r}
+ggplot(data = df, 
+       aes(x = time, y = Y, 
+           colour = treatment, 
+           group = g
+           )
+       ) + 
+  geom_point() + 
+  geom_line(stat = "smooth", method = lm, se = FALSE) + 
+  geom_vline(xintercept = -0.5, linetype = 2) + 
+  scale_color_manual(values = c("#F05253", "#2A73CC", "#F05253", "#2A73CC")) + 
+  theme(legend.position = c(0.2, 0.8)) 
+```
+
+---
+
+## Take the difference before and after treatment for the treatment and contrl groups
+
+```{r}
+ggplot(data = df, 
+       aes(x = time, y = Y, 
+           colour = treatment, 
+           group = g
+           )
+       ) + 
+  geom_point() + 
+  geom_line(stat = "smooth", method = lm, se = FALSE) + 
+  geom_vline(xintercept = -0.5, linetype = 2) + 
+  scale_color_manual(values = c("#F05253", "#2A73CC", "#F05253", "#2A73CC")) + 
+  theme(legend.position = c(0.2, 0.8))  + 
+  annotate(geom = "rect", 
+           xmin = -0.5-0.2, xmax = -0.5 + 0.2, 
+           ymin = 1, ymax = 5, fill = "#F05253") + 
+  annotate(geom = "rect", 
+           xmin = -0.5-0.2, xmax = -0.5 + 0.2, 
+           ymin = 6, ymax = 17, fill = "#2A73CC")
+```
+
+---
+
+## Take the difference of those differences
+
+```{r}
+ggplot(data = df, 
+       aes(x = time, y = Y, 
+           colour = treatment, 
+           group = g
+           )
+       ) + 
+  geom_point() + 
+  geom_line(stat = "smooth", method = lm, se = FALSE) + 
+  geom_vline(xintercept = -0.5, linetype = 2) + 
+  scale_color_manual(values = c("#F05253", "#2A73CC", "#F05253", "#2A73CC")) + 
+  theme(legend.position = c(0.1, 0.8))  + 
+  # annotate(geom = "rect", 
+  #          xmin = -0.5-0.2, xmax = -0.5 + 0.2, 
+  #          ymin = 1, ymax = 5, fill = "#F05253", 
+  #          alpha= 0.5) + 
+  annotate(geom = "rect", 
+           xmin = -0.5-0.2, xmax = -0.5 + 0.2, 
+           ymin = 10, ymax = 17, fill = "#2A73CC") + 
+  annotate(geom = "rect", 
+           xmin = -0.5-0.2, xmax = -0.5 + 0.2, 
+           ymin = 6, ymax = 10, fill = "#F05253", alpha = 0.5) + 
+  annotate("linerange", 
+           x = -.8, y = 20, ymin = 10, ymax = 17,
+           size = 1.5) + 
+  annotate("text", x = -2.25, y = 13, label = "Treatment Effect", size = 5)
+  labs(title = "Subtract the red from the blue") 
+```
+
+
+
 
 ---
 
