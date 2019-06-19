@@ -1,7 +1,7 @@
 ---
 title: "The Applied Economist's Toolkit"
 subtitle: ""  
-author: "Wei Yang Tham"
+author: "Wei Yang Tham<br><span style = 'font-size: 70%;'>weiyang.tham@gmail.com</span><br><span style = 'font-size: 70%;'>Twitter: @wytham88</span>"
 date: '`r Sys.Date()`'
 output:
   xaringan::moon_reader:
@@ -728,7 +728,13 @@ E.g. Retaining sellers on an online marketplace could affect revenue gains due t
 - [Teconomics](https://medium.com/teconomics-blog/)
 - [Structural models](https://towardsdatascience.com/the-holy-grail-of-econometrics-3a45a2295ce5) and [here as well](http://noahpinionblog.blogspot.com/2017/05/how-should-theory-and-evidence-relate.html)
 
+---
+class: inverse, middle
+# Questions
 
+<i class="fas fa-envelope"></i> weiyang.tham@gmail.com
+
+<i class="fab fa-twitter"></i> @wytham88
 
 
 
