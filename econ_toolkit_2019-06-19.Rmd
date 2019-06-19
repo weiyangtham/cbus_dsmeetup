@@ -17,7 +17,10 @@ output:
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(echo = FALSE, 
                       fig.align = 'center', 
-                      warning = FALSE, message = FALSE, out.width = "60%")
+                      warning = FALSE, message = FALSE, out.width = "85%",
+                      fig.width = 7,
+                      dpi = 300,
+                      fig.asp = 9/16)
 
 library(tidyverse)
 library(magrittr)
@@ -42,9 +45,10 @@ duo(
   text_font_size = "25px"
 )
 
-write_extra_css(list("strong" = list("font-weight" = "bold", "color" = "#d33682"), 
+write_extra_css(list("strong" = list("font-weight" = "900px"), 
                      "ul" = list("list-style-type" = "none", 
-                                 "margin" = "0", "padding" = "0")))
+                                 "margin" = "0", "padding" = "0"), 
+                     ".large" = list("font-size" = "130%")))
 
 theme_wyt <- function(base_size = 11, base_family = "", base_line_size = base_size/22, base_rect_size = base_size/22){
   # theme_light() %+replace%
@@ -67,7 +71,7 @@ theme_set(theme_wyt(base_size = 13))
 rm(list = ls())
 library(tidyverse)
 library(magrittr)
-theme_set(theme_minimal(base_size = 13))
+
 ```
 
 # About Me
@@ -122,15 +126,13 @@ class: inverse, middle
 
 ## Eating chocolate wins Nobel Prizes?
 
-```{r}
+```{r chocolate, out.width="60%"}
 knitr::include_graphics("img/chocolate_nobel.png")
 ```
 
 ---
 
-## Prediction vs causation
-
-## $$y = D\beta+ X\gamma + u$$
+## .large[$$y = D\beta+ X\gamma + u$$]
 
 - $y$ is an outcome we care about (e.g. wages)
 - $D$ is an indicator for a "treatment" (e.g. going to college)
@@ -158,7 +160,7 @@ People who go to college are different than people who don't go to college
 
 ## The effect of $U$ on $Y$ is wrongly attributed as the effect of D on Y
 
-```{r}
+```{r, out.width="60%"}
 knitr::include_graphics("img/ovb.png")
 ```
 
@@ -172,6 +174,7 @@ knitr::include_graphics("img/ovb.png")
 
 ## But RCTs are not always feasible
 
+- Some things can't be A/B tested (e.g. TV ads)
 - Expense
 - Internal resistance
 - Ethics (randomly assign lead poisoning)
@@ -265,6 +268,7 @@ class: inverse, middle
 ## Example
 
 - Say you want to know how an increase in the Ohio state minimum wage changed employment
+
 - If employment decreased after the minimum wage increased, does that mean the causal effect of the minimum wage was to decrease employment?
 
 ---
@@ -395,7 +399,7 @@ ggplot(data = df,
   annotate("linerange", 
            x = -.8, y = 20, ymin = 10, ymax = 17,
            size = 1.5) + 
-  annotate("text", x = -2.25, y = 13, label = "Treatment Effect", size = 5)
+  annotate("text", x = -2.25, y = 13, label = "Treatment Effect", size = 5) + 
   labs(title = "Subtract the red from the blue") 
 ```
 
@@ -435,7 +439,7 @@ ggplot(data = df,
 
 ## Example: Ineffectiveness of Paid search 
 
-```{r}
+```{r ebayad, out.width="60%"}
 knitr::include_graphics("img/ebayad.png")
 ```
 
@@ -451,7 +455,7 @@ knitr::include_graphics("img/ebayad.png")
 
 ---
 
-```{r}
+```{r, out.width="75%"}
 knitr::include_graphics("img/ebay_dd.png")
 ```
 
@@ -484,18 +488,18 @@ Example: What was the economic impact of reunification on West Germany?
 
 - Minimize the distance between West Germany and potential control countries based on a set of pre-unification variables (e.g. GDP per capita, trade openness, inflation rate)
 
---- 
+---
 
 ## West Germany looks different from the rest of the OECD
 
-```{r}
+```{r, out.width="50%"}
 knitr::include_graphics("img/beforesynth.png")
 ```
 
 ---
 
 ## West Germany and Synthetic West Germany look similar pre-reunification
-```{r}
+```{r, out.width="50%"}
 knitr::include_graphics("img/aftersynth.png")
 ```
 
@@ -567,6 +571,22 @@ ggplot(data = df, aes(x = X, y = Y, color = (X > 0))) +
 
 ---
 
+## Do online reviews affect consumer demand?
+
+Yelp rounds online ratings to the nearest half-star (3.24 -> 3, 3.25 -> 3.5)
+
+Compared difference in revenue between firms around the rounding thresholds
+
+---
+
+## 1-star increase leads to 5-9% increase in revenue
+```{r}
+knitr::include_graphics("img/luca_yelp.png")
+```
+
+
+---
+
 ## Regression discontinuity doesn't work if units around threshold are not randomly assigned
 
 - There could be manipulation around the threshold e.g. influential parents lobby to get their children extra points if they're just below the threshold
@@ -610,19 +630,26 @@ df %>%
 
 ---
 
+## Observables should not be "affected" by the discontinuity
+
+In scholarship example, if we observe a jump in parental income at the discontinuity, then something is wrong
 
 
 ---
 
-## What can't quasi-experiments do
+## What can't quasi-experiments do: Local average treatment effects
 
-- Experiment you want vs experiment you get
-- Local average treatment effects
-- External validity
+Often, we don't get to randomize across the whole population
+
+E.g. in regression discontinuity, we're estimating the causal effect for people *around the threshold* and ignoring those far away from the threshold
+
+This may still be relevant! Interventions often occur at the margin
 
 ---
 
-## Econometrics and Machine Learning
+## What can't quasi-experiments do: external validity
+
+Effects may change as interventions are scaled up
 
 ---
 
