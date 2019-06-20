@@ -1,7 +1,7 @@
 ---
 title: "The Applied Economist's Toolkit"
 subtitle: ""  
-author: "Wei Yang Tham<br><span style = 'font-size: 70%;'>weiyang.tham@gmail.com</span><br><span style = 'font-size: 70%;'>Twitter: @wytham88</span>"
+author: "Wei Yang Tham<br><span style = 'font-size: 70%;'>weiyang.tham@gmail.com</span><br><span style = 'font-size: 70%;'>Twitter: @wytham88</span><br><span style = 'font-size: 70%;'>Website: wytham.rbind.io</span>"
 date: '`r Sys.Date()`'
 output:
   xaringan::moon_reader:
@@ -749,7 +749,5 @@ class: inverse, middle
 <i class="fas fa-envelope"></i> weiyang.tham@gmail.com
 
 <i class="fab fa-twitter"></i> @wytham88
-
-
 
 
